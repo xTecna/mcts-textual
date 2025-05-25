@@ -1,0 +1,19 @@
+#tree-container {
+    width: 25%;
+    height: 100%;
+}
+
+#game-container {
+    width: 75%;
+    height: 100%;
+    align: center middle;
+}
+
+#game-table {
+    width: auto;
+    height: auto;
+}
+
+#game-result {
+    height: auto;
+}
