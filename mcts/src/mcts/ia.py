@@ -18,7 +18,7 @@ class No:
 
         self.filhos[jogada] = filho
 
-    def adiciona_resultado(self, resultado: int) -> None:
+    def adiciona_resultado(self, resultado: float) -> None:
         self.pontuacao = (self.pontuacao * self.visitas + resultado) / (self.visitas + 1)
         self.visitas += 1
 
