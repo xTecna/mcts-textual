@@ -6,8 +6,7 @@ Parte da palestra que eu dei na Twitch no dia 25 de maio de 2025.
 
 1. Faça um clone do repositório.
 2. Acesse a pasta `mcts`.
-3. Rode `poetry shell`.
-4. Acesse a pasta `src`.
-5. Rode `python -m mcts.main`.
+3. Rode `poetry install`.
+4. Rode `poetry run mcts`.
 
 ![Uma screenshot do programa](image.png)
