@@ -29,11 +29,9 @@ class IA:
         self.arvore = No()
 
     def escolhe_jogada(self, jogo: Jogo) -> tuple[int, int]:
-        jogo_inicial = deepcopy(jogo)
-
         for _ in range(self.max_iteracoes):
             no_atual: No = self.arvore
-            jogo_atual: Jogo = deepcopy(jogo_inicial)
+            jogo_atual: Jogo = deepcopy(jogo)
 
             no_atual = self.selecao(no_atual, jogo_atual)
             no_atual = self.expansao(no_atual, jogo_atual)
