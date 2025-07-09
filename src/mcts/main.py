@@ -8,10 +8,10 @@ pontos_pra_ganhar = 3
 
 def main():
     Tela(
-        C=C, \
-        max_iteracoes=max_iteracoes, \
-        jogador_vai_primeiro=jogador_vai_primeiro, \
-        tamanho=tamanho, \
+        C=C,
+        max_iteracoes=max_iteracoes,
+        jogador_vai_primeiro=jogador_vai_primeiro,
+        tamanho=tamanho,
         pontos_pra_ganhar=pontos_pra_ganhar).run()
 
 if __name__ == '__main__':
