@@ -1,7 +1,5 @@
 from mcts.tela import Tela
 
-from math import sqrt
-
 C = 0.1
 max_iteracoes = 1000
 jogador_vai_primeiro = True
