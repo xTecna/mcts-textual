@@ -69,7 +69,7 @@ class IA:
         if jogo.acabou():
             return no
 
-        jogadas = set(jogo.lista_jogadas()).difference(set(no.filhos.keys()))
+        jogadas = set(jogo.lista_jogadas()).difference(no.filhos.keys())
         jogada_escolhida = choice(list(jogadas))
 
         no.adiciona_filho(jogada_escolhida)

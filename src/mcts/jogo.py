@@ -10,7 +10,7 @@ class Jogo:
         self.tamanho: int = tamanho
         self.pontos_pra_ganhar: int = pontos_pra_ganhar
         self.tabuleiro: list[list[bool | None]] = [[None for j in range(self.tamanho)] for i in range(self.tamanho)]
-        self.jogadas: set[tuple[int, int]] = set([(i, j) for j in range(self.tamanho) for i in range(self.tamanho)])
+        self.jogadas: set[tuple[int, int]] = {(i, j) for j in range(self.tamanho) for i in range(self.tamanho)}
 
     def lista_jogadas(self) -> list[tuple[int, int]]:
         if not self.terminou:
