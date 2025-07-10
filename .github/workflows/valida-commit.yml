@@ -1,0 +1,34 @@
+name: Valida Commit
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Executa lints
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Clona repositório
+        uses: actions/checkout@v4
+
+      - name: Instala poetry
+        run: pipx install poetry==2.1.3
+
+      - name: Instala python
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: poetry
+
+      - name: Instala dependências
+        if: steps.setup-python.outputs.cache-hit != 'true'
+        run: poetry sync
+
+      - name: Executa lints
+        run: poetry run task lint
