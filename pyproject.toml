@@ -17,6 +17,11 @@ packages = [{include = "mcts", from = "src"}]
 [tool.poetry.scripts]
 mcts = "mcts.main:main"
 
+[tool.poetry.group.dev.dependencies]
+taskipy = "^1.14.1"
+
+[tool.taskipy.tasks]
+
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
