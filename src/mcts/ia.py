@@ -45,6 +45,9 @@ class IA:
             if filho.pontuacao > melhor_resultado:
                 melhor_resultado = filho.pontuacao
                 jogada_escolhida = jogada
+        
+        if jogada_escolhida is None:
+            raise RuntimeError('Sem jogada disponível')
 
         return jogada_escolhida
 
@@ -59,6 +62,9 @@ class IA:
                 if intervalo > maior_intervalo:
                     maior_intervalo = intervalo
                     melhor_jogada = jogada
+            
+            if melhor_jogada is None:
+                raise RuntimeError('Sem jogada disponível')
 
             no = no.filhos[melhor_jogada]
             jogo.joga(melhor_jogada)
@@ -77,7 +83,7 @@ class IA:
 
         return no.filhos[jogada_escolhida]
 
-    def simulacao(self, jogo: Jogo) -> bool | None:
+    def simulacao(self, jogo: Jogo) -> float:
         while not jogo.acabou():
             jogadas = jogo.lista_jogadas()
             jogada_escolhida = choice(jogadas)
@@ -89,7 +95,7 @@ class IA:
             return 0.5
         return 1.0
 
-    def retropropagacao(self, no: No, resultado: int) -> None:
+    def retropropagacao(self, no: No | None, resultado: float) -> None:
         while no is not None:
             no.adiciona_resultado(resultado)
             no = no.pai

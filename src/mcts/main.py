@@ -6,7 +6,7 @@ jogador_vai_primeiro = True
 tamanho = 3
 pontos_pra_ganhar = 3
 
-def main():
+def main() -> None:
     Tela(
         C=C,
         max_iteracoes=max_iteracoes,
