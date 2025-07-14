@@ -9,3 +9,13 @@ Parte da palestra que eu dei na Twitch no dia 25 de maio de 2025.
 3. Rode `poetry run mcts`.
 
 ![Uma screenshot do programa](image.png)
+
+## Ferramentas de desenvolvimento
+
+### Lints
+
+Para executar os lints do projeto, execute o comando:
+
+```sh
+poetry run task lint
+```
