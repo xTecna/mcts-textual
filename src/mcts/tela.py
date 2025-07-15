@@ -13,6 +13,7 @@ from textual import on
 if TYPE_CHECKING:
     from textual.widgets._tree import TreeNode
 
+
 class Tela(App[None]):
     CSS_PATH = './styles/tela.tcss'
     BINDINGS = [
@@ -20,15 +21,17 @@ class Tela(App[None]):
         ('r', 'restart', 'Reiniciar'),
         ('t', 'swap_players', 'Troca jogadores'),
         ('f', 'easier', 'Mais fácil'),
-        ('d', 'harder', 'Mais difícil')
+        ('d', 'harder', 'Mais difícil'),
     ]
 
-    def __init__(self,
+    def __init__(
+        self,
         C: float,
         max_iteracoes: int,
         jogador_vai_primeiro: bool,
         tamanho: int,
-        pontos_pra_ganhar: int) -> None:
+        pontos_pra_ganhar: int,
+    ) -> None:
         self.C = C
         self.max_iteracoes = max_iteracoes
         self.jogador = jogador_vai_primeiro
@@ -41,16 +44,10 @@ class Tela(App[None]):
 
         super().__init__()
 
-    def check_action(
-        self,
-        action: str,
-        parameters: tuple[object, ...]) -> bool | None:
+    def check_action(self, action: str, parameters: tuple[object, ...]) -> bool | None:
         if action == 'exit':
             return True
-        if action == 'restart' or \
-            action == 'swap_players' or \
-            action == 'easier' or \
-            action == 'harder':
+        if action in ('restart', 'swap_players', 'easier', 'harder'):
             return not self.pausado
         return True
 
@@ -186,7 +183,10 @@ class Tela(App[None]):
                 for jogada in sorted(list(no_atual.filhos)):
                     filho = no_atual.filhos[jogada]
                     visitas_pai = filho.pai.visitas if filho.pai else 0
-                    child_element = element.add(f'({jogada[0]}, {jogada[1]}) {filho.visitas} {filho.pontuacao:.6f} [{filho.pontuacao:.6f} + {self.C} * sqrt({visitas_pai} / {filho.visitas})]', expand=False)
+                    child_element = element.add(
+                        f'({jogada[0]}, {jogada[1]}) {filho.visitas} {filho.pontuacao:.6f} [{filho.pontuacao:.6f} + {self.C} * sqrt({visitas_pai} / {filho.visitas})]',
+                        expand=False,
+                    )
 
                     fila.put((child_element, filho))
 

@@ -45,9 +45,11 @@ class Jogo:
 
                             pontos = 1
                             a, b = i + x, j + y
-                            while 0 <= a < self.tamanho and \
-                                0 <= b < self.tamanho and \
-                                self.tabuleiro[a][b] == self.tabuleiro[i][j]:
+                            while (
+                                0 <= a < self.tamanho
+                                and 0 <= b < self.tamanho
+                                and self.tabuleiro[a][b] == self.tabuleiro[i][j]
+                            ):
                                 pontos += 1
                                 if pontos == self.pontos_pra_ganhar:
                                     return self.tabuleiro[i][j]
