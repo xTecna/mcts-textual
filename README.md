@@ -19,3 +19,15 @@ Para executar os lints do projeto, execute o comando:
 ```sh
 poetry run task lint
 ```
+
+Para corrigir os problemas de formatação, execute o comando:
+
+```sh
+poetry run task fmt
+```
+
+Para corrigir automaticamente os casos de lint possíveis, execute o comando:
+
+```sh
+poetry run task lint-fix
+```
