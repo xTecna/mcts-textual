@@ -1,8 +1,8 @@
-from mcts.jogo import Jogo
-
-from random import choice
 from copy import deepcopy
 from math import sqrt
+from random import choice
+
+from mcts.jogo import Jogo
 
 
 class No:
@@ -25,8 +25,8 @@ class No:
 
 
 class IA:
-    def __init__(self, C: float, max_iteracoes: int) -> None:
-        self.C = C
+    def __init__(self, c: float, max_iteracoes: int) -> None:
+        self.c = c
         self.max_iteracoes = max_iteracoes
         self.arvore = No()
 
@@ -59,7 +59,7 @@ class IA:
             maior_intervalo = -1.0
             for jogada in no.filhos:
                 filho = no.filhos[jogada]
-                intervalo = filho.pontuacao + self.C * sqrt(no.visitas / filho.visitas)
+                intervalo = filho.pontuacao + self.c * sqrt(no.visitas / filho.visitas)
 
                 if intervalo > maior_intervalo:
                     maior_intervalo = intervalo
