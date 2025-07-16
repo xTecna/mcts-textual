@@ -20,9 +20,20 @@ mcts = "mcts.main:main"
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.16.1"
 taskipy = "^1.14.1"
+ruff = "^0.12.3"
 
 [tool.taskipy.tasks]
-lint = "mypy --show-error-context --pretty src"
+fmt = "ruff format"
+lint = "ruff format --check --diff && mypy --show-error-context --pretty src"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 119
+src = ["src"]
+
+[tool.ruff.format]
+line-ending = "lf"
+quote-style = "single"
 
 [tool.mypy]
 warn_unused_configs = true

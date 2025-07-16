@@ -4,6 +4,7 @@ from random import choice
 from copy import deepcopy
 from math import sqrt
 
+
 class No:
     def __init__(self) -> None:
         self.pontuacao: float = 0.0
@@ -21,6 +22,7 @@ class No:
     def adiciona_resultado(self, resultado: float) -> None:
         self.pontuacao = (self.pontuacao * self.visitas + resultado) / (self.visitas + 1)
         self.visitas += 1
+
 
 class IA:
     def __init__(self, C: float, max_iteracoes: int) -> None:
@@ -45,7 +47,7 @@ class IA:
             if filho.pontuacao > melhor_resultado:
                 melhor_resultado = filho.pontuacao
                 jogada_escolhida = jogada
-        
+
         if jogada_escolhida is None:
             raise RuntimeError('Sem jogada disponível')
 
@@ -62,7 +64,7 @@ class IA:
                 if intervalo > maior_intervalo:
                     maior_intervalo = intervalo
                     melhor_jogada = jogada
-            
+
             if melhor_jogada is None:
                 raise RuntimeError('Sem jogada disponível')
 
