@@ -77,7 +77,7 @@ class IA:
         if jogo.acabou():
             return no
 
-        jogadas = set(jogo.lista_jogadas()).difference(no.filhos.keys())
+        jogadas = jogo.lista_jogadas().difference(no.filhos.keys())
         jogada_escolhida = choice(list(jogadas))
 
         no.adiciona_filho(jogada_escolhida)
@@ -88,7 +88,7 @@ class IA:
     def simulacao(self, jogo: Jogo) -> float:
         while not jogo.acabou():
             jogadas = jogo.lista_jogadas()
-            jogada_escolhida = choice(jogadas)
+            jogada_escolhida = choice(list(jogadas))
 
             jogo.joga(jogada_escolhida)
 
