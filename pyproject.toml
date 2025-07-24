@@ -24,7 +24,8 @@ ruff = "^0.12.3"
 
 [tool.taskipy.tasks]
 fmt = "ruff format"
-lint = "ruff format --check --diff && mypy --show-error-context --pretty src"
+lint = "ruff format --check --diff && ruff check && mypy --show-error-context --pretty src"
+lint-fix = "ruff check --fix"
 
 [tool.ruff]
 target-version = "py313"
@@ -34,6 +35,13 @@ src = ["src"]
 [tool.ruff.format]
 line-ending = "lf"
 quote-style = "single"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["COM812", "E501", "E722", "D", "S311", "FBT", "EM", "TRY002", "TRY003"]
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "single"
 
 [tool.mypy]
 warn_unused_configs = true

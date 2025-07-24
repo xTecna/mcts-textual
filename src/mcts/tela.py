@@ -1,14 +1,14 @@
-from mcts.jogo import Jogo
-from mcts.ia import No, IA
-
 from queue import Queue
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, ClassVar, cast
 
-from textual.app import App, ComposeResult
-from textual.containers import Vertical, Horizontal
-from textual.coordinate import Coordinate
-from textual.widgets import *
 from textual import on
+from textual.app import App, ComposeResult
+from textual.containers import Horizontal, Vertical
+from textual.coordinate import Coordinate
+from textual.widgets import DataTable, Footer, Header, Label, Tree
+
+from mcts.ia import IA, No
+from mcts.jogo import Jogo
 
 if TYPE_CHECKING:
     from textual.widgets._tree import TreeNode
@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 
 class Tela(App[None]):
     CSS_PATH = './styles/tela.tcss'
-    BINDINGS = [
+    BINDINGS: ClassVar = [
         ('x', 'exit', 'Sair'),
         ('r', 'restart', 'Reiniciar'),
         ('t', 'swap_players', 'Troca jogadores'),
@@ -26,13 +26,13 @@ class Tela(App[None]):
 
     def __init__(
         self,
-        C: float,
+        c: float,
         max_iteracoes: int,
         jogador_vai_primeiro: bool,
         tamanho: int,
         pontos_pra_ganhar: int,
     ) -> None:
-        self.C = C
+        self.c = c
         self.max_iteracoes = max_iteracoes
         self.jogador = jogador_vai_primeiro
         self.tamanho = tamanho
@@ -44,7 +44,7 @@ class Tela(App[None]):
 
         super().__init__()
 
-    def check_action(self, action: str, parameters: tuple[object, ...]) -> bool | None:
+    def check_action(self, action: str, parameters: tuple[object, ...]) -> bool | None:  # noqa: ARG002
         if action == 'exit':
             return True
         if action in ('restart', 'swap_players', 'easier', 'harder'):
@@ -63,11 +63,11 @@ class Tela(App[None]):
 
     def action_easier(self) -> None:
         self.max_iteracoes = max(1, self.max_iteracoes // 2)
-        cast(Label, self.query_one('#ia-info')).update(f'Iteracoes por jogada: {self.max_iteracoes}')
+        cast('Label', self.query_one('#ia-info')).update(f'Iteracoes por jogada: {self.max_iteracoes}')
 
     def action_harder(self) -> None:
         self.max_iteracoes *= 2
-        cast(Label, self.query_one('#ia-info')).update(f'Iteracoes por jogada: {self.max_iteracoes}')
+        cast('Label', self.query_one('#ia-info')).update(f'Iteracoes por jogada: {self.max_iteracoes}')
 
     def compose(self) -> ComposeResult:
         yield Header()
@@ -95,8 +95,8 @@ class Tela(App[None]):
         self.jogo = Jogo(self.tamanho, self.pontos_pra_ganhar)
         self.set_tree(None)
         await self.set_table()
-        cast(Label, self.query_one('#game-result')).update('')
-        cast(Label, self.query_one('#ia-info')).update(f'Iteracoes por jogada: {self.max_iteracoes}')
+        cast('Label', self.query_one('#game-result')).update('')
+        cast('Label', self.query_one('#ia-info')).update(f'Iteracoes por jogada: {self.max_iteracoes}')
         if not self.jogador:
             self.ia_play()
 
@@ -107,7 +107,7 @@ class Tela(App[None]):
         game_table_element.disabled = False
 
     async def set_table(self) -> None:
-        game_table_element = cast(DataTable[str], self.query_one('#game-table'))
+        game_table_element = cast('DataTable[str]', self.query_one('#game-table'))
 
         game_table_element.clear()
         game_table_element.cursor_type = 'cell'
@@ -124,7 +124,7 @@ class Tela(App[None]):
 
     @on(DataTable.CellSelected, '#game-table')
     async def choose_cell(self, event: DataTable.CellSelected) -> None:
-        table_element = cast(DataTable[str], self.query_one('#game-table'))
+        table_element = cast('DataTable[str]', self.query_one('#game-table'))
         table_element.disabled = True
 
         self.pausado = True
@@ -161,16 +161,16 @@ class Tela(App[None]):
         table_element.disabled = False
 
     def ia_play(self) -> None:
-        ia = IA(self.C, self.max_iteracoes)
+        ia = IA(self.c, self.max_iteracoes)
         jogada = ia.escolhe_jogada(self.jogo)
         self.jogo.joga(jogada)
         self.set_tree(ia.arvore)
 
-        table_element = cast(DataTable[str], self.query_one('#game-table'))
+        table_element = cast('DataTable[str]', self.query_one('#game-table'))
         table_element.update_cell_at(Coordinate(jogada[0], jogada[1]), self.simbolos[not self.jogador])
 
     def set_tree(self, arvore: No | None) -> None:
-        tree_element = cast(Tree[None], self.query_one('#ia-tree'))
+        tree_element = cast('Tree[None]', self.query_one('#ia-tree'))
         tree_element.clear()
 
         if arvore:
@@ -180,11 +180,11 @@ class Tela(App[None]):
             while not fila.empty():
                 element, no_atual = fila.get()
 
-                for jogada in sorted(list(no_atual.filhos)):
+                for jogada in sorted(no_atual.filhos):
                     filho = no_atual.filhos[jogada]
                     visitas_pai = filho.pai.visitas if filho.pai else 0
                     child_element = element.add(
-                        f'({jogada[0]}, {jogada[1]}) {filho.visitas} {filho.pontuacao:.6f} [{filho.pontuacao:.6f} + {self.C} * sqrt({visitas_pai} / {filho.visitas})]',
+                        f'({jogada[0]}, {jogada[1]}) {filho.visitas} {filho.pontuacao:.6f} [{filho.pontuacao:.6f} + {self.c} * sqrt({visitas_pai} / {filho.visitas})]',
                         expand=False,
                     )
 
@@ -197,8 +197,8 @@ class Tela(App[None]):
         self.refresh_bindings()
 
         if self.jogo.ganhador() is None:
-            cast(Label, self.query_one('#game-result')).update('Ninguém ganhou.')
+            cast('Label', self.query_one('#game-result')).update('Ninguém ganhou.')
         elif self.jogo.ganhador() == self.jogador:
-            cast(Label, self.query_one('#game-result')).update('Parabéns, você ganhou!')
+            cast('Label', self.query_one('#game-result')).update('Parabéns, você ganhou!')
         else:
-            cast(Label, self.query_one('#game-result')).update('Que pena, você perdeu...')
+            cast('Label', self.query_one('#game-result')).update('Que pena, você perdeu...')
