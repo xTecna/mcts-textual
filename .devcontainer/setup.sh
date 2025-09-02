@@ -10,7 +10,7 @@ echo '. <(pip completion --bash)' > ~/.local/share/bash-completion/completions/p
 echo '. <(register-python-argcomplete pipx)' > ~/.local/share/bash-completion/completions/pipx
 
 # Configura poetry
-pipx install poetry==2.1.3
+pipx install poetry==2.1.4
 poetry config virtualenvs.in-project true
 [ -e .venv ] || poetry env use /usr/local/bin/python
 echo '.  <(poetry completions bash)' > ~/.local/share/bash-completion/completions/poetry
