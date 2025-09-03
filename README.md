@@ -1,6 +1,6 @@
 # MCTS no textual do jogo da velha
 
-Parte da palestra que eu dei na Twitch no dia 25 de maio de 2025.
+Parte da [palestra que eu dei na Twitch no dia 25 de maio de 2025](https://www.youtube.com/watch?v=zj_ALNomkWE).
 
 ## Como executar?
 
