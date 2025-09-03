@@ -37,22 +37,18 @@ class Jogo:
         for i in range(self.tamanho):
             for j in range(self.tamanho):
                 if self.tabuleiro[i][j] is not None:
-                    # Para cada peça do tabuleiro tenta estender linhas, colunas e diagonais
-                    for x in [-1, 0, 1]:
-                        for y in [-1, 0, 1]:
-                            if x == 0 and y == 0:
-                                continue
-
-                            pontos = 1
-                            a, b = i + x, j + y
-                            while (
-                                0 <= a < self.tamanho
-                                and 0 <= b < self.tamanho
-                                and self.tabuleiro[a][b] == self.tabuleiro[i][j]
-                            ):
-                                pontos += 1
-                                if pontos == self.pontos_pra_ganhar:
-                                    return self.tabuleiro[i][j]
-                                a, b = a + x, b + y
+                    # Para cada peça do tabuleiro tenta estender linha, coluna e as duas diagonais
+                    for x, y in [(0, 1), (1, 0), (1, 1), (-1, 1)]:
+                        pontos = 1
+                        a, b = i + x, j + y
+                        while (
+                            0 <= a < self.tamanho
+                            and 0 <= b < self.tamanho
+                            and self.tabuleiro[a][b] == self.tabuleiro[i][j]
+                        ):
+                            pontos += 1
+                            if pontos == self.pontos_pra_ganhar:
+                                return self.tabuleiro[i][j]
+                            a, b = a + x, b + y
 
         return None
