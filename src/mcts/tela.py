@@ -8,7 +8,7 @@ from textual.coordinate import Coordinate
 from textual.widgets import DataTable, Footer, Header, Label, Tree
 
 from mcts.ia import IA, No
-from mcts.jogo import Jogo
+from mcts.jogo import JogoDaVelha
 
 if TYPE_CHECKING:
     from textual.widgets._tree import TreeNode
@@ -37,7 +37,7 @@ class Tela(App[None]):
         self.jogador = jogador_vai_primeiro
         self.tamanho = tamanho
         self.pontos_pra_ganhar = pontos_pra_ganhar
-        self.jogo = Jogo(tamanho, pontos_pra_ganhar)
+        self.jogo = JogoDaVelha(tamanho, pontos_pra_ganhar)
 
         self.pausado = False
         self.simbolos = {None: ' ', False: 'O', True: 'X'}
@@ -96,7 +96,7 @@ class Tela(App[None]):
         self.pausado = True
         self.refresh_bindings()
 
-        self.jogo = Jogo(self.tamanho, self.pontos_pra_ganhar)
+        self.jogo = JogoDaVelha(self.tamanho, self.pontos_pra_ganhar)
         self.set_tree(None)
         await self.set_table()
         self.elemento_game_result.update('')

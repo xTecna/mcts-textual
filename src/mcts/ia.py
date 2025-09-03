@@ -2,7 +2,7 @@ from copy import deepcopy
 from math import sqrt
 from random import choice
 
-from mcts.jogo import Jogo
+from mcts.jogo import JogoDaVelha
 
 
 class No:
@@ -30,10 +30,10 @@ class IA:
         self.max_iteracoes = max_iteracoes
         self.arvore = No()
 
-    def escolhe_jogada(self, jogo: Jogo) -> tuple[int, int]:
+    def escolhe_jogada(self, jogo: JogoDaVelha) -> tuple[int, int]:
         for _ in range(self.max_iteracoes):
             no_atual: No = self.arvore
-            jogo_atual: Jogo = deepcopy(jogo)
+            jogo_atual: JogoDaVelha = deepcopy(jogo)
 
             no_atual = self.selecao(no_atual, jogo_atual)
             no_atual = self.expansao(no_atual, jogo_atual)
@@ -53,7 +53,7 @@ class IA:
 
         return jogada_escolhida
 
-    def selecao(self, no: No, jogo: Jogo) -> No:
+    def selecao(self, no: No, jogo: JogoDaVelha) -> No:
         while not jogo.acabou() and len(no.filhos) == len(jogo.lista_jogadas()):
             melhor_jogada = None
             maior_intervalo = -1.0
@@ -73,7 +73,7 @@ class IA:
 
         return no
 
-    def expansao(self, no: No, jogo: Jogo) -> No:
+    def expansao(self, no: No, jogo: JogoDaVelha) -> No:
         if jogo.acabou():
             return no
 
@@ -85,7 +85,7 @@ class IA:
 
         return no.filhos[jogada_escolhida]
 
-    def simulacao(self, jogo: Jogo) -> float:
+    def simulacao(self, jogo: JogoDaVelha) -> float:
         while not jogo.acabou():
             jogadas = jogo.lista_jogadas()
             jogada_escolhida = choice(list(jogadas))
