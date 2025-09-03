@@ -8,7 +8,7 @@ from textual.coordinate import Coordinate
 from textual.widgets import DataTable, Footer, Header, Label, Tree
 
 from mcts.ia import IA, No
-from mcts.jogo import JogoDaVelha
+from mcts.jogo import JogadaJogoDaVelha, JogoDaVelha
 
 if TYPE_CHECKING:
     from textual.widgets._tree import TreeNode
@@ -162,18 +162,18 @@ class Tela(App[None]):
         self.elemento_game_table.disabled = False
 
     def ia_play(self) -> None:
-        ia = IA(self.c, self.max_iteracoes)
+        ia = IA[JogadaJogoDaVelha](self.c, self.max_iteracoes)
         jogada = ia.escolhe_jogada(self.jogo)
         self.jogo.joga(jogada)
         self.set_tree(ia.arvore)
 
         self.elemento_game_table.update_cell_at(Coordinate(jogada[0], jogada[1]), self.simbolos[not self.jogador])
 
-    def set_tree(self, arvore: No | None) -> None:
+    def set_tree(self, arvore: No[JogadaJogoDaVelha] | None) -> None:
         self.elemento_ia_tree.clear()
 
         if arvore:
-            fila: Queue[tuple[TreeNode[None], No]] = Queue()
+            fila: Queue[tuple[TreeNode[None], No[JogadaJogoDaVelha]]] = Queue()
             fila.put((self.elemento_ia_tree.root, arvore))
 
             while not fila.empty():
