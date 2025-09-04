@@ -1,4 +1,28 @@
-class Jogo:
+from abc import ABC, abstractmethod
+
+
+class Jogo[Jogada](ABC):
+    @abstractmethod
+    def lista_jogadas(self) -> set[Jogada]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def joga(self, jogada: Jogada) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def acabou(self) -> bool:
+        raise NotImplementedError
+
+    @abstractmethod
+    def ganhador(self) -> bool | None:
+        raise NotImplementedError
+
+
+JogadaJogoDaVelha = tuple[int, int]
+
+
+class JogoDaVelha(Jogo[JogadaJogoDaVelha]):
     def __init__(self, tamanho: int, pontos_pra_ganhar: int) -> None:
         if tamanho <= 0:
             raise Exception('O tamanho passado não é válido.')
@@ -10,15 +34,15 @@ class Jogo:
         self.tamanho: int = tamanho
         self.pontos_pra_ganhar: int = pontos_pra_ganhar
         self.tabuleiro: list[list[bool | None]] = [[None for j in range(self.tamanho)] for i in range(self.tamanho)]
-        self.jogadas: set[tuple[int, int]] = {(i, j) for j in range(self.tamanho) for i in range(self.tamanho)}
+        self.jogadas: set[JogadaJogoDaVelha] = {(i, j) for j in range(self.tamanho) for i in range(self.tamanho)}
 
-    def lista_jogadas(self) -> set[tuple[int, int]]:
+    def lista_jogadas(self) -> set[JogadaJogoDaVelha]:
         if not self.terminou:
             return self.jogadas
 
         raise Exception('O jogo já terminou.')
 
-    def joga(self, jogada: tuple[int, int]) -> None:
+    def joga(self, jogada: JogadaJogoDaVelha) -> None:
         x, y = jogada
         if jogada not in self.jogadas or self.tabuleiro[x][y] is not None:
             raise Exception('A jogada não é válida.')
