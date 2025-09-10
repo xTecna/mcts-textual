@@ -16,6 +16,7 @@ packages = [{include = "mcts", from = "src"}]
 
 [tool.poetry.scripts]
 mcts = "mcts.main:main"
+mcts-lig4 = "mcts.main:main_lig4"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.16.1"
