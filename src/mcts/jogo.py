@@ -133,10 +133,10 @@ class Lig4(Jogo[JogadaLig4]):
                     b += y
                 ligs[x + 1][y + 1] = pontos
         if (
-            ligs[0][0] + ligs[2][2] + 1 == self.casas_pra_ganhar
-            or ligs[1][0] + ligs[1][2] + 1 == self.casas_pra_ganhar
-            or ligs[2][0] + ligs[0][2] + 1 == self.casas_pra_ganhar
-            or ligs[0][1] + ligs[2][1] + 1 == self.casas_pra_ganhar
+            ligs[0][0] + ligs[2][2] + 1 >= self.casas_pra_ganhar
+            or ligs[1][0] + ligs[1][2] + 1 >= self.casas_pra_ganhar
+            or ligs[2][0] + ligs[0][2] + 1 >= self.casas_pra_ganhar
+            or ligs[0][1] + ligs[2][1] + 1 >= self.casas_pra_ganhar
         ):
             return self.tabuleiro[coluna][linha]
         return None
